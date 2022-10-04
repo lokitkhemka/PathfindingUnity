@@ -8,17 +8,19 @@ public class Node : IHeapItem<Node>
     public Vector3 WorldPosition;
     public int GridX, GridY;
     public Node Parent;
+    public int MovementPenalty;
 
     public int GCost;
     public int HCost;
     int heapIndex;
 
-    public Node(bool walkable, Vector3 worldPos, int gridX, int gridY)
+    public Node(bool walkable, Vector3 worldPos, int gridX, int gridY, int _Penalty)
     {
         Walkable = walkable;
         WorldPosition = worldPos;
         GridX = gridX;
         GridY = gridY;
+        MovementPenalty = _Penalty;
     }
 
     public int FCost
