@@ -1366,6 +1366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 359804242}
   speed: 20
+  TurnSpeed: 3
   TurnDist: 5
 --- !u!114 &1312644295
 MonoBehaviour:
@@ -1379,8 +1380,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daffc411633577a4ab41fedc9f554480, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
+  target: {fileID: 359804242}
   speed: 20
+  TurnSpeed: 3
   TurnDist: 5
 --- !u!1 &1375152916
 GameObject:
