@@ -2,20 +2,42 @@ using UnityEngine;
 using System.Collections;
 
 public class Unit : MonoBehaviour {
-
-
+	const float MinPathUpdateTime = 0.2f;
+	const float PathUpdateMoveThreshold = 	0.5f;
 	public Transform target;
 	public float speed = 20;
 	public float TurnSpeed = 3;
 	public float TurnDist = 5;
 	Path path;
 
-
+	void Start()
+	{
+		StartCoroutine(UpdatePath());
+	}
 	public void OnPathFound(Vector3[] Waypoints, bool pathSuccessful) {
 		if (pathSuccessful) {
 			path = new Path(Waypoints, transform.position, TurnDist);
 			StopCoroutine("FollowPath");
 			StartCoroutine("FollowPath");
+		}
+	}
+
+	IEnumerator UpdatePath(){
+		if(Time.timeSinceLevelLoad<0.3f)
+		{
+			yield return new WaitForSeconds(0.3f);
+		}
+		PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+		float SqrMoveThshld = PathUpdateMoveThreshold * PathUpdateMoveThreshold;
+		Vector3 TargetPosOld = target.position;
+
+		while(true)
+		{
+			yield return new WaitForSeconds(MinPathUpdateTime);
+			if((target.position- TargetPosOld).sqrMagnitude > SqrMoveThshld){
+				PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+				TargetPosOld = target.position;
+			}
 		}
 	}
 
